@@ -27,6 +27,7 @@ function TamPx_Script_ExpirationDate_Online(expiryDate)
 			gg.setVisible(false)
 			gg.gotoBrowser('https://youtube.com/@tampxz?si=6rWU_-q9vlZBjCOS')
 		end
+		start_setMain()
 	end
 	return {true}
 end
