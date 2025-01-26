@@ -1,5 +1,9 @@
 start_setActivity = os.exit
 start_setMain = os.exit
+if not gg.TamPxLoad('https://www.google.com').encode then
+	gg.alert('Bạn Đang Ngoại Tuyến Hãy Thử Kiểm Tra Lại Kết Nối Internet \nYou Are Offline Please Check Your Internet Connection')
+	os.exit()
+end
 function TamPx_Script_ExpirationDate_Online(expiryDate)
 	bool_setActivity = true
 	int_setMain = true
