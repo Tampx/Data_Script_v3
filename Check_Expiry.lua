@@ -1,5 +1,29 @@
 start_setActivity = os.exit
 start_setMain = os.exit
+function ARMx32(...)
+	local addr_list = gg.getRangesList('libc.so')
+	local addr
+	for _, v in ipairs(addr_list) do
+		if v.type:sub(2, 2) == 'w' then
+			addr = {address = v.start, flags = 4}
+			break
+		end
+	end
+	if not addr then gg.alert("Failed", "") return end
+	local old = gg.getValues({addr})
+	local result = ""
+	
+	for _, arm in ipairs({...}) do
+		addr.value = '~A ' .. arm
+		pcall(gg.setValues, {addr})
+		local temp_result = gg.getValues({addr})[1].value & 0xFFFFFFFF
+		temp_result = string.unpack('>I4', string.pack('<I4', temp_result))
+		temp_result = string.format('%08X', temp_result)
+		result = result .. temp_result
+	end
+	gg.setValues(old)
+	return "h" .. result
+end
 if not gg.TamPxLoad('https://www.google.com').encode then
 	gg.alert('Bạn Đang Ngoại Tuyến Hãy Thử Kiểm Tra Lại Kết Nối Internet \nYou Are Offline Please Check Your Internet Connection')
 	os.exit()
